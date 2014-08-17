@@ -1,0 +1,26 @@
+[root]
+name = "borealis"
+version = "0.0.1"
+dependencies = [
+ "docopt 0.6.0 (git+https://github.com/docopt/docopt.rs#fc7ba2f1a5a351f7874257d880223d2ff5c75d36)",
+ "docopt_macros 0.6.0 (git+https://github.com/docopt/docopt.rs#fc7ba2f1a5a351f7874257d880223d2ff5c75d36)",
+]
+
+[[package]]
+name = "docopt"
+version = "0.6.0"
+source = "git+https://github.com/BurntSushi/docopt.rs#fc7ba2f1a5a351f7874257d880223d2ff5c75d36"
+
+[[package]]
+name = "docopt"
+version = "0.6.0"
+source = "git+https://github.com/docopt/docopt.rs#fc7ba2f1a5a351f7874257d880223d2ff5c75d36"
+
+[[package]]
+name = "docopt_macros"
+version = "0.6.0"
+source = "git+https://github.com/docopt/docopt.rs#fc7ba2f1a5a351f7874257d880223d2ff5c75d36"
+dependencies = [
+ "docopt 0.6.0 (git+https://github.com/BurntSushi/docopt.rs#fc7ba2f1a5a351f7874257d880223d2ff5c75d36)",
+]
+
