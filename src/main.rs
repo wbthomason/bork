@@ -151,9 +151,11 @@ fn find_packages(packages : Vec<String>) {
             (write!(terminal, "{}/", result.Maintainer.clone().unwrap())).unwrap();
           }
 
-          (write!(terminal, "{}]:\t", result.Name)).unwrap();
+          (write!(terminal, "{}]: ", result.Name)).unwrap();
           terminal.fg(color::WHITE).unwrap();
           (writeln!(terminal, "{}", result.Description)).unwrap();
+          terminal.fg(color::BRIGHT_BLUE).unwrap();
+          (writeln!(terminal, "License: {}\t Version: {}", result.License, result.Version)).unwrap();
         }
 
         terminal.reset().unwrap();
@@ -180,21 +182,11 @@ fn find_packages(packages : Vec<String>) {
     }
 
     fn parse_aur_json(body_json : &Json)  ->  Option<Vec<data_structures::AurItem>> {
-      let id_string : String = String::from_str("ID");
       let name_string : String = String::from_str("Name");
-      let packageBaseId_string : String = String::from_str("PackageBaseID");
-      let packageBase_string : String = String::from_str("PackageBase");
       let version_string : String = String::from_str("Version");
-      let categoryId_string : String = String::from_str("CategoryID");
       let description_string : String = String::from_str("Description");
-      let url_string : String = String::from_str("URL");
-      let numvotes_string : String = String::from_str("NumVotes");
-      let outofdate_string : String = String::from_str("OutOfDate");
       let maintainer_string : String = String::from_str("Maintainer");
-      let firstsubmitted_string : String = String::from_str("FirstSubmitted");
-      let lastmodified_string : String = String::from_str("LastModified");
       let license_string : String = String::from_str("License");
-      let urlPath_string : String = String::from_str("URLPath");
 
       let json_map : &TreeMap<String, Json> = body_json.as_object().unwrap();
       let result_list : Option<&Vec<Json>> = json_map.find(&String::from_str("results")).unwrap().as_list();
@@ -209,21 +201,11 @@ fn find_packages(packages : Vec<String>) {
         // TODO: Make all unwraps safer/eliminate
         // TODO: Only retrieve datums used
         let result_item = data_structures::AurItem {
-          ID :  result.find(&id_string).unwrap().as_number().unwrap(),
           Name : String::from_str(result.find(&name_string).unwrap().as_string().unwrap()),
-          PackageBaseID : result.find(&packageBaseId_string).unwrap().as_number().unwrap(),
-          PackageBase : String::from_str(result.find(&packageBase_string).unwrap().as_string().unwrap()),
           Version : String::from_str(result.find(&version_string).unwrap().as_string().unwrap()),
-          CategoryID : result.find(&categoryId_string).unwrap().as_number().unwrap(),
           Description : String::from_str(result.find(&description_string).unwrap().as_string().unwrap()),
-          URL : String::from_str(result.find(&url_string).unwrap().as_string().unwrap()),
-          NumVotes : result.find(&numvotes_string).unwrap().as_number().unwrap(),
-          OutOfDate : result.find(&outofdate_string).unwrap().as_number().unwrap(),
           Maintainer : result.find(&maintainer_string).unwrap().as_string().map(|maintainer| String::from_str(maintainer)),
-          FirstSubmitted : result.find(&firstsubmitted_string).unwrap().as_number().unwrap(),
-          LastModified : result.find(&lastmodified_string).unwrap().as_number().unwrap(),
-          License : String::from_str(result.find(&license_string).unwrap().as_string().unwrap()),
-          URLPath : String::from_str(result.find(&urlPath_string).unwrap().as_string().unwrap())
+          License : String::from_str(result.find(&license_string).unwrap().as_string().unwrap())
         };
 
         parsed_list.push(result_item);
