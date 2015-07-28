@@ -4,11 +4,9 @@ name = "borealis"
 version = "0.0.1"
 authors = ["wbthomason <wil.thomason@gmail.com>"]
 
-[dependencies.docopt]
-git = "https://github.com/docopt/docopt.rs"
-
-[dependencies.docopt_macros]
-git = "https://github.com/docopt/docopt.rs"
-
-[dependencies.http]
-git = "https://github.com/chris-morgan/rust-http"
+[dependencies]
+hyper           = "0.6.5"
+docopt          = "0.6.67"
+yaml-rust       = "0.2.1"
+rustc-serialize = "0.3.15"
+term            = "0.2.11"
