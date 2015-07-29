@@ -1,0 +1,15 @@
+pub static PACKAGES:            &'static str = "packages";
+pub static INSTALL:             &'static str = "install"; 
+pub static REMOVE:              &'static str = "remove";
+pub static UPDATE:              &'static str = "update";
+pub static UPDATE_ALL:          &'static str = "update-all";
+pub static SEARCH:              &'static str = "search";
+pub static SHORT_INSTALL:       &'static str = "i"; 
+pub static SHORT_REMOVE:        &'static str = "r";
+pub static SHORT_UPDATE:        &'static str = "u";
+pub static SHORT_UPDATE_ALL:    &'static str = "a";
+pub static SHORT_SEARCH:        &'static str = "s";
+pub static INSTALL_CMD:             &'static str = "install"; 
+pub static REMOVE_CMD:              &'static str = "remove";
+pub static UPDATE_CMD:              &'static str = "update";
+pub static SEARCH_CMD:              &'static str = "search";
