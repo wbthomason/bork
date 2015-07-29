@@ -5,7 +5,7 @@ extern crate term;
 
 mod constants;
 
-use clap::{App, Arg, SubCommand};
+use clap::{App, Arg, SubCommand, ArgMatches};
 
 fn main() {
   let args = App::new("borealis")
@@ -72,46 +72,51 @@ multiple types.")
                         .index(1)
                         .required(true)))
                 .get_matches();
-  install_packages(args.values_of(constants::INSTALL));
-  remove_packages(args.values_of(constants::REMOVE));
-  update_packages(args.is_present(constants::UPDATE), args.values_of(constants::UPDATE));
-  find_packages(args.values_of(constants::SEARCH));
+  install_packages(args.values_of(constants::INSTALL), args.subcommand_matches(constants::INSTALL_CMD));
+  remove_packages(args.values_of(constants::REMOVE), args.subcommand_matches(constants::REMOVE_CMD));
+  update_packages(args.values_of(constants::UPDATE), args.subcommand_matches(constants::UPDATE_CMD));
+  find_packages(args.values_of(constants::SEARCH), args.subcommand_matches(constants::SEARCH_CMD));
 }
 
 // Install the listed packages and their dependencies
-fn install_packages(maybe_packages : Option<Vec<&str>>) {
-  if let Some(packages) = maybe_packages {
-    print_status("Installing", &packages);
-  }
+fn install_packages(opt_packages: Option<Vec<&str>>, cmd_packages: Option<&ArgMatches>) {
+  let packages =
+      if let Some(x) = opt_packages {x}
+      else if let Some(x) = cmd_packages {x.values_of(constants::PACKAGES).unwrap()}
+      else {return};
+  print_status("Installing", &packages);
 }
 
-// Remove the listed packages and (if selected) their dependencies
-fn remove_packages(maybe_packages : Option<Vec<&str>>) {
-  if let Some(packages) = maybe_packages {
-    print_status("Removing", &packages);
-  }
+// Remove the listed packages and their dependencies
+fn remove_packages(opt_packages: Option<Vec<&str>>, cmd_packages: Option<&ArgMatches>) {
+  let packages =
+      if let Some(x) = opt_packages {x}
+      else if let Some(x) = cmd_packages {x.values_of(constants::PACKAGES).unwrap()}
+      else {return};
+  print_status("Removing", &packages);
 }
 
 // Update the listed packages, or all packages
-fn update_packages(update_present: bool, maybe_packages : Option<Vec<&str>>) {
-  if update_present {
-    let packages = maybe_packages.unwrap_or(vec!["all"]);
-    if packages.len() == 0 || packages[0].to_string() == "all" {
-      println!("\tUpdating all packages");
-    }
-    else {
-      print_status("Updating", &packages);
-    }
+fn update_packages(opt_packages: Option<Vec<&str>>, cmd_packages: Option<&ArgMatches>) {
+  let packages =
+      if let Some(x) = opt_packages {x}
+      else if let Some(x) = cmd_packages {x.values_of(constants::PACKAGES).unwrap_or(vec![])}
+      else {return};
+  if packages.len() == 0 || packages[0].to_string() == "all" {
+    println!("\tUpdating all packages");
+  }
+  else {
+    print_status("Updating", &packages);
   }
 }
 
 // Retrieve details on the listed packages
-fn find_packages(maybe_packages : Option<Vec<&str>>) {
-  if let Some(packages) = maybe_packages {
-    print_status("Searching for", &packages);
-  // Retrieve and parse package data asynchronously, using a lock for printing to
-  // prevent intermingling of data
-    }
+fn find_packages(opt_packages: Option<Vec<&str>>, cmd_packages: Option<&ArgMatches>) {
+  let packages =
+      if let Some(x) = opt_packages {x}
+      else if let Some(x) = cmd_packages {x.values_of(constants::PACKAGES).unwrap()}
+      else {return};
+  print_status("Searching for", &packages);
 }
 
 fn print_status(operation_type : &str, packages : &Vec<&str>) {
