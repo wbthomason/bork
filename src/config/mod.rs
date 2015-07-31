@@ -3,7 +3,6 @@
 use clap::{App, Arg, SubCommand, ArgMatches};
 use std::fs::File;
 use std::io::prelude::*;
-use std::process;
 use yaml_rust::{YamlLoader, Yaml};
 
 use super::constants;
@@ -81,20 +80,14 @@ multiple types. Operations are run in the order Install, Remove, Update, Search"
                 .required(true))).get_matches()
 }
 
-pub fn config_opts(conf_path: Option<&str>) -> Vec<Yaml> {
-    let file_path = conf_path.unwrap_or(
+pub fn config_opts(file_path: Option<&str>) -> Vec<Yaml> {
+    let file_path = file_path.unwrap_or(
         if cfg!(target_os = "windows") { constants::WINDOWS_CONF_PATH }
         else { constants::NIX_CONF_PATH }
         );
-    let config_file = try!(File::open(&file_path));
+    let mut config_file = File::open(&file_path).ok().expect(&format!("Couldn't open {}", &file_path));
     let mut config_contents = String::new();
-    try!(config_file.read_to_string(&mut config_contents));
-    let options = if let Some(opts) = YamlLoader::load_from_str(config_contents.as_str())
-        { opts }
-    else {
-        println!("Error: Invalid configuration file at {}", file_path);
-        process::exit(1)
-    };
-    println!("{:?}", options);
+    config_file.read_to_string(&mut config_contents).ok().expect(&format!("Couldn't read {}", &file_path));
+    let options = YamlLoader::load_from_str(&config_contents).ok().expect(&format!("Invalid config file at {}", file_path));
     options
 }
