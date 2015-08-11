@@ -7,7 +7,7 @@ use yaml_rust::{YamlLoader, Yaml};
 
 use super::constants;
 
-pub fn args<'_>() -> ArgMatches<'_, '_>  {
+pub fn get_args<'_>() -> ArgMatches<'_, '_>  {
     App::new("borealis")
         .version(&crate_version!()[..])
         .about("\nManages package managers, works universally, dances flamenco.
@@ -80,7 +80,7 @@ multiple types. Operations are run in the order Install, Remove, Update, Search"
                 .required(true))).get_matches()
 }
 
-pub fn config_opts(file_path: Option<&str>) -> Vec<Yaml> {
+pub fn get_config_opts(file_path: Option<&str>) -> Vec<Yaml> {
     let file_path = file_path.unwrap_or(
         if cfg!(target_os = "windows") { constants::WINDOWS_CONF_PATH }
         else { constants::NIX_CONF_PATH }

@@ -1,16 +1,16 @@
-// Constants: A collection of compile-time constant values used in multiple
-// places throughout the rest of the code.
+/// Constants: A collection of compile-time constant values used in multiple
+/// places throughout the rest of the code.
 
-// Common options:
+/// Common options:
 pub const PACKAGES:             &'static str = "packages";
 
-// Configuration options:
+/// Configuration options:
 pub const CONFIG_FILE:          &'static str = "config";
 pub const SHORT_CONFIG_FILE:    &'static str = "c";
 pub const WINDOWS_CONF_PATH:    &'static str = "C:\\borealis\\config.yaml";
 pub const NIX_CONF_PATH:        &'static str = "/etc/borealis/config.yaml";
 
-// Operations:
+/// Operations:
 pub const INSTALL:              &'static str = "install"; 
 pub const REMOVE:               &'static str = "remove";
 pub const UPDATE:               &'static str = "update";

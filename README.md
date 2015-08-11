@@ -1,4 +1,4 @@
-borealis
+bork
 ========
 
 The universal package manager (really, a package manager manager).
