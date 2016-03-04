@@ -1,4 +1,4 @@
-# The default configuration for Borealis
+# The default configuration for bork
 
 verbosity:
   - print_stages: false

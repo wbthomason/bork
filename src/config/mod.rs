@@ -5,7 +5,7 @@ use std::fs::File;
 use std::io::prelude::*;
 use yaml_rust::{YamlLoader, Yaml};
 
-use super::constants;
+use constants;
 
 pub fn get_args<'_>() -> ArgMatches<'_, '_>  {
     App::new("borealis")

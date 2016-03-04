@@ -5,8 +5,8 @@ version = "0.0.1"
 authors = ["wbthomason <wil.thomason@gmail.com>"]
 
 [dependencies]
-hyper           = "0.6.5"
-clap            = "1.1.4"
-yaml-rust       = "0.2.1"
-rustc-serialize = "0.3.15"
-term            = "0.2.11"
+hyper           = "~0.7.2"
+clap            = "~2.1.2"
+yaml-rust       = "~0.3.0"
+rustc-serialize = "~0.3.18"
+term            = "~0.4.4"

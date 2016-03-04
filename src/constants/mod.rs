@@ -9,6 +9,7 @@ pub const CONFIG_FILE:          &'static str = "config";
 pub const SHORT_CONFIG_FILE:    &'static str = "c";
 pub const WINDOWS_CONF_PATH:    &'static str = "C:\\borealis\\config.yaml";
 pub const NIX_CONF_PATH:        &'static str = "/etc/borealis/config.yaml";
+pub const PROVIDERS_KEY:        &'static str = "providers";
 
 /// Operations:
 pub const INSTALL:              &'static str = "install"; 
@@ -25,3 +26,22 @@ pub const INSTALL_CMD:          &'static str = "install";
 pub const REMOVE_CMD:           &'static str = "remove";
 pub const UPDATE_CMD:           &'static str = "update";
 pub const SEARCH_CMD:           &'static str = "search";
+
+/// Provider values:
+pub enum LangTypes {
+    Rust,
+    Clojure,
+    Python,
+    Ruby,
+    C
+}
+
+pub enum OSTypes {
+    OSX,
+    Windows,
+    Generic_Linux,
+    Arch_Linux,
+    Ubuntu_Linux,
+    Gentoo_Linux,
+    RH_Linux
+}
