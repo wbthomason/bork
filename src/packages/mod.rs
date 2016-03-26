@@ -3,5 +3,7 @@
 
 pub mod types;
 
-pub fn load_packages() -> Vec<i32> {vec![0, 1]}
-pub fn save_packages(package_list : Vec<i32>) {}
+pub fn load_packages() -> Vec<i32> {
+    vec![0, 1]
+}
+pub fn save_packages(package_list: Vec<i32>) {}

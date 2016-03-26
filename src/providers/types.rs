@@ -10,5 +10,5 @@ pub struct Provider<'_> {
     path: Option<&'_ Path>,
     install_path: Option<&'_ Path>,
     dependency_path: Option<&'_ Path>,
-    name: &'_ str
+    name: &'_ str,
 }
