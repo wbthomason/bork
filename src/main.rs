@@ -1,40 +1,47 @@
 // Primary module; main control flow
+#[macro_use]
+extern crate clap;
+extern crate toml;
 
 mod common;
 mod config;
 mod constants;
 mod installation;
-mod packages;
-mod providers;
 mod removal;
 mod search;
 mod update;
 mod util;
 
 fn main() {
+    // Parse arguments
     let args = config::get_args();
-    // Not doing anything with the config file just yet; we need functionality for that
+    // Read configuration and load system info
     let config_opts = config::get_config_opts(args.value_of(constants::CONFIG_FILE));
-    let valid_providers = providers::get_valid_providers(config_opts[constants::PROVIDERS_KEY]);
-    let installed_packages = packages::load_packages();
-    let installed_packages =
-        installation::install_packages(valid_providers,
-                                       installed_packages,
-                                       util::merge_package_vecs(
-                                        args.values_of(constants::INSTALL),
-                                        args.subcommand_matches(constants::INSTALL_CMD),
-                                        ));
-    let installed_packages =
-        removal::remove_packages(installed_packages,
-                                 args.values_of(constants::REMOVE),
-                                 args.subcommand_matches(constants::REMOVE_CMD));
-    let installed_packages =
-        update::update_packages(valid_providers,
-                                installed_packages,
-                                args.values_of(constants::UPDATE),
-                                args.subcommand_matches(constants::UPDATE_CMD));
-    packages::save_packages(installed_packages);
-    search::find_packages(valid_providers,
-                          args.values_of(constants::SEARCH),
-                          args.subcommand_matches(constants::SEARCH_CMD));
+
+    // If we only want to search, find the named packages
+    if args.is_present(constants::SEARCH) || args.is_present(constants::SEARCH_CMD) {
+        let search_results = search::find_packages(
+            args.values_of(constants::SEARCH),
+            args.subcommand_matches(constants::SEARCH_CMD));
+        println!("Search Results: \n{}", search_results);
+    }
+    else {
+        // Remove packages to be removed
+        let packages_for_removal = util::merge_package_vecs(&[
+            args.values_of(constants::REMOVE),
+            args.values_of(constants::REMOVE_CMD)]);
+        removal::remove_packages(packages_for_removal);
+
+        // Install packages to be installed
+        let packages_for_installation = util::merge_package_vecs(&[
+            args.values_of(constants::INSTALL),
+            args.values_of(constants::INSTALL_CMD)]);
+        installation::install_packages(packages_for_installation);
+
+        // Update packages to be updated
+        let packages_for_updating = util::merge_package_vecs(&[
+            args.values_of(constants::UPDATE),
+            args.values_of(constants::UPDATE_CMD)]);
+        update::update_packages(packages_for_updating);
+    }
 }

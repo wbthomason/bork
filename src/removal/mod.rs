@@ -1,14 +1,9 @@
-extern crate clap;
-
-use clap::ArgMatches;
 use common::print_status;
 use constants;
+use std::collections::HashSet;
 
 // Remove the listed packages and their dependencies
-pub fn remove_packages(installed_packages: Vec<i32>,
-                       opt_packages: Option<Vec<&str>>,
-                       cmd_packages: Option<&ArgMatches>)
-                       -> Vec<i32> {
+pub fn remove_packages<'a>(packages_to_remove: HashSet<&'a str>) -> Vec<i32> {
     let packages = if let Some(x) = opt_packages {
         x
     } else if let Some(x) = cmd_packages {
