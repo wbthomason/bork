@@ -2,6 +2,9 @@
 #[macro_use]
 extern crate clap;
 extern crate toml;
+#[macro_use]
+extern crate log;
+extern crate env_logger;
 
 mod common;
 mod config;
@@ -13,17 +16,21 @@ mod update;
 mod util;
 
 fn main() {
+    // Start logging
+    env_logger::init().expect("Couldn't initialize logging!");
     // Parse arguments
     let args = config::get_args();
+    debug!("Got args: {:?}", args);
     // Read configuration and load system info
     let config_opts = config::get_config_opts(args.value_of(constants::CONFIG_FILE));
 
     // If we only want to search, find the named packages
     if args.is_present(constants::SEARCH) || args.is_present(constants::SEARCH_CMD) {
-        let search_results = search::find_packages(
+        let packages_for_search = util::merge_package_vecs(&[
             args.values_of(constants::SEARCH),
-            args.subcommand_matches(constants::SEARCH_CMD));
-        println!("Search Results: \n{}", search_results);
+            args.values_of(constants::SEARCH_CMD)]);
+        let (core_str, aur_str) = search::search_packages(packages_for_search);
+        println!("Core Packages:\n{}\nAUR Packages:\n{}", core_str, aur_str);
     }
     else {
         // Remove packages to be removed

@@ -1,6 +1,6 @@
-use constants;
 use std::collections::HashSet;
 
-// Retrieve details on the listed packages
-pub fn find_packages<'a>(package_names: HashSet<&'a str>) {
+// Search the AUR and core repositories for packages mentioning the given terms
+pub fn search_packages<'a>(package_names: HashSet<&'a str>) -> (&str, &str) {
+    ("Foo", "Bar")
 }
