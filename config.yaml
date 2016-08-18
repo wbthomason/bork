@@ -1,8 +1,0 @@
-# The default configuration for bork
-
-verbosity:
-  - print_stages: false
-
-safety:
-  - warn_before_install: false
-  - warn_before_remove: true

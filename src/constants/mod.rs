@@ -7,7 +7,8 @@ pub const PACKAGES: &'static str = "packages";
 /// Configuration options:
 pub const CONFIG_FILE: &'static str = "config";
 pub const SHORT_CONFIG_FILE: &'static str = "c";
-pub const NIX_CONF_PATH: &'static str = "/etc/bork/config.yaml";
+pub const NIX_CONF_PATH: &'static str = "config/config.toml";
+pub const NIX_LOG_CONF_PATH: &'static str = "config/log4rs.yaml";
 
 /// Operations:
 pub const INSTALL: &'static str = "install";

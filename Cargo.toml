@@ -10,4 +10,4 @@ clap            = "~2.10.0"
 toml            = "~0.2.0"
 term            = "~0.4.4"
 log             = "~0.3.6"
-env_logger      = "~0.3.4"
+log4rs          = { version = "~0.4.8", features = ["toml", "yaml"] }

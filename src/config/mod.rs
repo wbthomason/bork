@@ -8,7 +8,7 @@ use std::io::prelude::*;
 use constants;
 
 pub fn get_args<'_>() -> ArgMatches<'_> {
-    App::new("borealis")
+    App::new("bork")
         .version(crate_version!())
         .about("A very fast, smart AUR helper.
 You can use the subcommands for operations of only one type,
