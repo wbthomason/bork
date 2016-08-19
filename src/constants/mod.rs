@@ -25,3 +25,10 @@ pub const INSTALL_CMD: &'static str = "install";
 pub const REMOVE_CMD: &'static str = "remove";
 pub const UPDATE_CMD: &'static str = "update";
 pub const SEARCH_CMD: &'static str = "search";
+
+/// AUR information:
+pub const AUR_RPC_URL: &'static str = "https://aur.archlinux.org/rpc/?v=5";
+pub const AUR_RPC_SEARCH_FMT: &'static str = "&type=search";
+pub const AUR_RPC_SEARCH_ARG: &'static str = "&arg=";
+pub const AUR_RPC_INFO_FMT: &'static str = "&type=info";
+pub const AUR_RPC_INFO_ARG: &'static str = "&arg[]=";
