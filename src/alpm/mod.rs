@@ -1,1 +1,5 @@
-// TODO: Duplicate the alpm public API in Rust FFI
+// The interface to ALPM
+
+mod bindings;
+
+

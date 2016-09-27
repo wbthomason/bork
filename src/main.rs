@@ -1,6 +1,6 @@
 // Primary module; main control flow
-#![feature(plugin, custom_derive)]
-#![plugin(serde_macros)]
+
+extern crate serde;
 extern crate serde_json;
 
 #[macro_use]
@@ -21,6 +21,8 @@ mod removal;
 mod search;
 mod update;
 mod util;
+
+include!(concat!(env!("OUT_DIR"), "/serde_types.rs"));
 
 fn main() {
     // Start logging

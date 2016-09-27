@@ -3,6 +3,10 @@
 name = "bork"
 version = "0.0.1"
 authors = ["wbthomason <wil.thomason@gmail.com>"]
+build = "build.rs"
+
+[build-dependencies]
+serde_codegen = "~0.8.3"
 
 [dependencies]
 curl            = "~0.3.4"
@@ -11,6 +15,6 @@ toml            = "~0.2.0"
 term            = "~0.4.4"
 log             = "~0.3.6"
 log4rs          = { version = "~0.4.8", features = ["toml", "yaml"] }
+serde           = "~0.8.3"
 serde_json      = "~0.8.1"
-serde_macros    = "~0.8.2"
 libc            = "~0.2.15"
