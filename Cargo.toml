@@ -1,20 +1,18 @@
 [package]
-
 name = "bork"
 version = "0.0.1"
 authors = ["wbthomason <wil.thomason@gmail.com>"]
-build = "build.rs"
 
 [build-dependencies]
 serde_codegen = "~0.8.3"
 
 [dependencies]
-curl            = "~0.3.4"
-clap            = "~2.10.0"
-toml            = "~0.2.0"
+curl            = "~0.4.1"
+clap            = "~2.19.2"
+toml            = "~0.2.1"
 term            = "~0.4.4"
 log             = "~0.3.6"
-log4rs          = { version = "~0.4.8", features = ["toml", "yaml"] }
-serde           = "~0.8.3"
-serde_json      = "~0.8.1"
-libc            = "~0.2.15"
+log4rs          = "~0.5.2"
+serde           = "~0.8.20"
+serde_json      = "~0.8.4"
+libc            = "~0.2.18"

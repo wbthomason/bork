@@ -22,8 +22,6 @@ mod search;
 mod update;
 mod util;
 
-include!(concat!(env!("OUT_DIR"), "/serde_types.rs"));
-
 fn main() {
     // Start logging
     log4rs::init_file(constants::NIX_LOG_CONF_PATH, Default::default()).unwrap();
