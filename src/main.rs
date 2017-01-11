@@ -21,6 +21,9 @@ extern crate tokio_curl;
 
 extern crate futures;
 
+#[macro_use]
+extern crate itertools;
+
 include!(concat!(env!("OUT_DIR"), "/serde_types.rs"));
 
 mod config;
