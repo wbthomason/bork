@@ -14,6 +14,15 @@ extern crate log4rs;
 
 extern crate toml;
 
+extern crate curl;
+
+extern crate tokio_core;
+extern crate tokio_curl;
+
+extern crate futures;
+
+include!(concat!(env!("OUT_DIR"), "/serde_types.rs"));
+
 mod config;
 mod constants;
 mod installation;
@@ -21,6 +30,7 @@ mod removal;
 mod search;
 mod update;
 mod util;
+mod aur;
 
 fn main() {
     // Start logging

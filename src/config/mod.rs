@@ -7,7 +7,7 @@ use std::io::prelude::*;
 
 use constants;
 
-pub fn get_args<'_>() -> ArgMatches<'_> {
+pub fn get_args<'a>() -> ArgMatches<'a> {
     App::new("bork")
         .version(crate_version!())
         .about("A hopefully helpful AUR helper.
