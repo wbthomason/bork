@@ -4,7 +4,7 @@ appenders:
     kind: console
   logf:
     kind: file
-    path: "log/requests.log"
+    path: "log/bork.log"
     encoder:
       pattern: "{d} - {m}{n}"
 root:
