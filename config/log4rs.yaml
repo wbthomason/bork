@@ -1,8 +1,13 @@
-refresh_rate: 30
+refresh_rate: 30 seconds
 appenders:
   stdout:
     kind: console
+  logf:
+    kind: file
+    path: "log/requests.log"
+    encoder:
+      pattern: "{d} - {m}{n}"
 root:
-  level: debug
+  level: info
   appenders:
     - stdout
