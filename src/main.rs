@@ -21,6 +21,10 @@ extern crate tokio_curl;
 
 extern crate futures;
 
+extern crate colored;
+
+extern crate chrono;
+
 #[macro_use]
 extern crate itertools;
 
@@ -52,7 +56,7 @@ fn main() {
                                                                      constants::SEARCH_CMD)]);
         info!("Searching for: {:?}", packages_for_search);
         let (core_str, aur_str) = search::search_packages(packages_for_search);
-        println!("Core Packages:\n{}\nAUR Packages:\n{}", core_str, aur_str);
+        println!("{}\n{}", core_str, aur_str);
     } else {
         // Remove packages to be removed
         let packages_for_removal =

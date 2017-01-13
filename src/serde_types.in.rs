@@ -1,5 +1,5 @@
-#[derive(Deserialize)]
-struct SearchResult {
+#[derive(Deserialize, Debug)]
+pub struct SearchResult {
     #[serde(rename="type")]
     result_type: String,
     version: i32,
@@ -7,22 +7,36 @@ struct SearchResult {
     results: Vec<self::SearchInfoResult>
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 struct SearchInfoResult {
-    ID: i32,
-    Name: String,
-    PackageBaseID: i32,
-    PackageBase: String,
-    Version: String,
-    Description: String,
-    URL: String,
-    NumVotes: i32,
-    Popularity: f32,
-    OutOfDate: Option<i32>,
-    Maintainer: Option<String>,
-    FirstSubmitted: i32,
-    LastModified: i32,
-    URLPath: String,
+    #[serde(rename="ID")]
+    id: i32,
+    #[serde(rename="Name")]
+    name: String,
+    #[serde(rename="PackageBaseID")]
+    package_base_id: i32,
+    #[serde(rename="PackageBase")]
+    package_base: String,
+    #[serde(rename="Version")]
+    version: String,
+    #[serde(rename="Description")]
+    description: String,
+    #[serde(rename="URL")]
+    url: String,
+    #[serde(rename="NumVotes")]
+    num_votes: i32,
+    #[serde(rename="Popularity")]
+    popularity: f32,
+    #[serde(rename="OutOfDate")]
+    out_of_date: Option<i32>,
+    #[serde(rename="Maintainer")]
+    maintainer: Option<String>,
+    #[serde(rename="FirstSubmitted")]
+    first_submitted: i64,
+    #[serde(rename="LastModified")]
+    last_modified: i64,
+    #[serde(rename="URLPath")]
+    url_path: String,
 }
 
 #[derive(Deserialize)]
@@ -36,24 +50,42 @@ struct InfoResult {
 
 #[derive(Deserialize)]
 struct InfoResultItem {
-    ID: i32,
-    Name: String,
-    PackageBaseID: i32,
-    PackageBase: String,
-    Version: String,
-    Description: String,
-    URL: String,
-    NumVotes: i32,
-    Popularity: f32,
-    OutOfDate: Option<i32>,
-    Maintainer: Option<String>,
-    FirstSubmitted: i32,
-    LastModified: i32,
-    URLPath: String,
-    Depends: Vec<String>,
-    MakeDepends: Vec<String>,
-    License: Vec<String>,
-    Keywords: Vec<String>
+    #[serde(rename="ID")]
+    id: i32,
+    #[serde(rename="Name")]
+    name: String,
+    #[serde(rename="PackageBaseID")]
+    package_base_id: i32,
+    #[serde(rename="PackageBase")]
+    package_base: String,
+    #[serde(rename="Version")]
+    version: String,
+    #[serde(rename="Description")]
+    description: String,
+    #[serde(rename="URL")]
+    url: String,
+    #[serde(rename="NumVotes")]
+    num_votes: i32,
+    #[serde(rename="Popularity")]
+    popularity: f32,
+    #[serde(rename="OutOfDate")]
+    out_of_date: Option<i32>,
+    #[serde(rename="Maintainer")]
+    maintainer: Option<String>,
+    #[serde(rename="FirstSubmitted")]
+    first_submitted: i64,
+    #[serde(rename="LastModified")]
+    last_modified: i64,
+    #[serde(rename="URLPath")]
+    url_path: String,
+    #[serde(rename="Depends")]
+    depends: Vec<String>,
+    #[serde(rename="MakeDepends")]
+    make_depends: Vec<String>,
+    #[serde(rename="License")]
+    license: Vec<String>,
+    #[serde(rename="Keywords")]
+    keywords: Vec<String>
 }
 
 #[derive(Deserialize)]

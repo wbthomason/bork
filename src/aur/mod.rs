@@ -18,13 +18,12 @@ use std::sync::{Mutex, Arc};
 use constants;
 use ::SearchResult;
 
-pub fn search(packages: &HashSet<&str>) -> Vec<String> {
-    let mut rpc = Easy::new();
+pub fn search(packages: &HashSet<&str>) -> Vec<Result<SearchResult, String>> {
     let url = constants::AUR_RPC_URL.to_owned() + constants::AUR_RPC_SEARCH_FMT + constants::AUR_RPC_SEARCH_ARG;
-    let raw_results = make_requests(&url, packages);
-    Vec::new()
+    make_requests(&url, packages)
 }
 
+// TODO: To reuse this for info queries, I need to change the return signature
 fn make_requests(url: &str, packages: &HashSet<&str>) -> Vec<Result<SearchResult, String>> {
     let mut lp = Core::new().unwrap();
     let session = Session::new(lp.handle());
@@ -43,7 +42,6 @@ fn make_requests(url: &str, packages: &HashSet<&str>) -> Vec<Result<SearchResult
         match search_req.url(&format!("{}{}", url, package)) {
             Ok(_)   => {
                 search_req.write_function(move |data| {
-                    io::stdout().write_all(data.clone()).unwrap();
                     write_handle.lock().unwrap().extend_from_slice(data);
                     Ok(data.len())
                 }).unwrap();
