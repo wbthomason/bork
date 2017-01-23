@@ -11,14 +11,14 @@ use ::SearchResult;
 
 // Search the AUR and core repositories for packages mentioning the given terms
 pub fn search_packages<'a>(package_names: HashSet<&'a str>) -> (String, String) {
-    // TODO: Format pacman results
-    let pacman_results_ugly = get_pacman_results(&package_names);
-    let aur_results_ugly = get_aur_results(&package_names);
-    (pacman_results_ugly, aur_results_ugly)
+    let pacman_results = get_pacman_results(&package_names);
+    let aur_results = get_aur_results(&package_names);
+    (pacman_results, aur_results)
 }
 
 fn get_pacman_results<'a, 'b>(package_names: &HashSet<&'a str>) -> String {
     // TODO: Use libalpm instead of directly calling pacman
+    // TODO: Format pacman results
     let mut pacman_search_command = Command::new("pacman");
     pacman_search_command.arg("-Ss");
     for name in package_names {
@@ -34,7 +34,7 @@ fn get_aur_results<'a>(package_names: &HashSet<&'a str>) -> String {
     format_results(results)
 }
 
-fn format_results(results: Vec<Result<SearchResult, String>>) -> String {
+fn format_results(results: Vec<(String, Result<SearchResult, String>)>) -> String {
     let mut total_length = 0;
     let formatted_results: Vec<String> = results.into_iter().map(|result| {
         match result {
@@ -45,7 +45,6 @@ fn format_results(results: Vec<Result<SearchResult, String>>) -> String {
                     let ref desc    = package.description;
                     let ref url     = package.url;
                     let ref version = package.version;
-                    let pop         = package.popularity;
                     let maintainer  = package.maintainer.clone().map(|m| m.normal()).unwrap_or("Orphaned".red());
                     let outdated    = package.out_of_date.map(|x| if x == 0 { false } else { true }).unwrap_or(false);
                     let modified    = Local.from_utc_datetime(&NaiveDateTime::from_timestamp(package.last_modified, 0));
@@ -53,13 +52,12 @@ fn format_results(results: Vec<Result<SearchResult, String>>) -> String {
                     write!(&mut formatted_result, "{}", "[AUR]\t".bold().on_green());
                     write!(
                         &mut formatted_result, 
-                        "{} ({}): {}\n\tMaintainer: {}\tURL: {}\t\tPopularity: {}\n\tModified: {}",
+                        "{} ({}): {}\n\tMaintainer: {}\tURL: {}\n\tModified: {}",
                         name.bold(),
                         version.blue(),
                         desc,
                         maintainer,
                         url.cyan(),
-                        pop.to_string().yellow(),
                         modified.to_string());
                     if outdated {
                         write!(&mut formatted_result," {}", "(Out of date)".red());
