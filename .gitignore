@@ -2,3 +2,4 @@
 *.*.swo
 *.bk
 target/**
+log/
