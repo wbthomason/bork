@@ -7,7 +7,7 @@ use colored::*;
 use chrono::{TimeZone, NaiveDateTime, Local};
 
 use aur;
-use ::SearchResult;
+use aur::types::SearchResult;
 
 // Search the AUR and core repositories for packages mentioning the given terms
 pub fn search_packages<'a>(package_names: HashSet<&'a str>) -> (String, String) {

@@ -17,7 +17,9 @@ use std::error::Error;
 use std::sync::{Mutex, Arc};
 
 use constants;
-use ::{SearchResult, InfoResult};
+
+pub mod types;
+use self::types::{SearchResult, InfoResult};
 
 pub fn search(packages: &HashSet<&str>) -> Vec<(String, Result<SearchResult, String>)> {
     let url = constants::AUR_RPC_URL.to_owned() + constants::AUR_RPC_SEARCH_FMT + constants::AUR_RPC_SEARCH_ARG;

@@ -1,7 +1,7 @@
 // Config: Manage parsing of command line options and the config file
 
 use clap::{App, Arg, SubCommand, ArgMatches};
-use toml::{Table, Parser};
+use toml::Value;
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -81,7 +81,7 @@ multiple types. Operations are run in the order: [Search] xor [Remove, Install, 
         .get_matches()
 }
 
-pub fn get_config_opts(file_path: Option<&str>) -> Table {
+pub fn get_config_opts(file_path: Option<&str>) -> Value {
     let file_path = file_path.unwrap_or(constants::NIX_CONF_PATH);
     let mut config_file = File::open(&file_path)
         .ok()
@@ -90,8 +90,7 @@ pub fn get_config_opts(file_path: Option<&str>) -> Table {
     config_file.read_to_string(&mut config_contents)
         .ok()
         .expect(&format!("Couldn't read {}", &file_path));
-    let options = Parser::new(&config_contents)
-        .parse()
+    let options = (&config_contents).parse::<Value>()
         .expect(&format!("Invalid config file at {}", file_path));
     options
 }

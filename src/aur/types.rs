@@ -8,7 +8,7 @@ pub struct SearchResult {
 }
 
 #[derive(Deserialize, Debug)]
-struct SearchInfoResult {
+pub struct SearchInfoResult {
     #[serde(rename="ID")]
     id: i32,
     #[serde(rename="Name")]
@@ -40,7 +40,7 @@ struct SearchInfoResult {
 }
 
 #[derive(Deserialize)]
-struct InfoResult {
+pub struct InfoResult {
     #[serde(rename="type")]
     result_type: String,
     version: i32,
@@ -49,7 +49,7 @@ struct InfoResult {
 }
 
 #[derive(Deserialize)]
-struct InfoResultItem {
+pub struct InfoResultItem {
     #[serde(rename="ID")]
     id: i32,
     #[serde(rename="Name")]
@@ -89,7 +89,7 @@ struct InfoResultItem {
 }
 
 #[derive(Deserialize)]
-struct ErrorResult {
+pub struct ErrorResult {
     #[serde(rename="type")]
     result_type: String,
     version: i32,
@@ -97,3 +97,4 @@ struct ErrorResult {
     results: Vec<self::InfoResult>,
     error: String
 }
+
