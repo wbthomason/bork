@@ -21,9 +21,10 @@ pub fn merge_package_vecs<'a>(package_lists: &[Option<Values<'a>>]) -> HashSet<&
     })
 }
 
-pub fn get_subcommand_packages<'a>(matches: &'a ArgMatches<'a>,
-                                   subcommand_name: &'static str)
-                                   -> Option<Values<'a>> {
+pub fn get_subcommand_packages<'a>(
+    matches: &'a ArgMatches<'a>,
+    subcommand_name: &'static str,
+) -> Option<Values<'a>> {
     if let Some(subcommand_packages) = matches.subcommand_matches(subcommand_name) {
         subcommand_packages.values_of(constants::PACKAGES)
     } else {

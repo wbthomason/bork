@@ -22,17 +22,21 @@ pub mod types;
 use self::types::{SearchResult, InfoResult};
 
 pub fn search(packages: &HashSet<&str>) -> Vec<(String, Result<SearchResult, String>)> {
-    let url = constants::AUR_RPC_URL.to_owned() + constants::AUR_RPC_SEARCH_FMT + constants::AUR_RPC_SEARCH_ARG;
+    let url = constants::AUR_RPC_URL.to_owned() + constants::AUR_RPC_SEARCH_FMT +
+        constants::AUR_RPC_SEARCH_ARG;
     make_requests(&url, packages)
 }
 
 // TODO: To reuse this for info queries, I need to change the return signature
-fn make_requests<T: Deserialize + Send>(url: &str, packages: &HashSet<&str>) -> Vec<(String, Result<T, String>)> {
+fn make_requests<T: Deserialize + Send>(
+    url: &str,
+    packages: &HashSet<&str>,
+) -> Vec<(String, Result<T, String>)> {
     let mut lp = Core::new().unwrap();
     let session = Session::new(lp.handle());
     // TODO: Think about a way to not make the failure of one future make all the rest fail. This
-    // will involve not using join_all(), but at this time there doesn't seem to be a great alternative
-    // in futures-rs
+    // will involve not using join_all(), but at this time there doesn't seem to be a great
+    // alternative in futures-rs
     let package_results = lp.run(join_all(packages.iter().map(move |package_name| {
         // I think we need this to be owned because of the error messages. Also, it's weird that we
         // get a &&str here - it makes sense, but implies that there might be a cleaner/more
@@ -62,5 +66,9 @@ fn make_requests<T: Deserialize + Send>(url: &str, packages: &HashSet<&str>) -> 
             },
             Err(e)  => err(format!("{}: {:?}", package, e)).boxed()
         }}).collect::<Vec<_>>())).unwrap().into_iter();
-    packages.iter().map(|s| String::from(*s)).zip(package_results).collect::<Vec<_>>()
+    packages
+        .iter()
+        .map(|s| String::from(*s))
+        .zip(package_results)
+        .collect::<Vec<_>>()
 }
